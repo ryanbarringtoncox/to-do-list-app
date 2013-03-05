@@ -4,7 +4,7 @@ var main = function () {
   $.getJSON("all.json", function (todos) {
     var i;
     
-    //populate all body
+    //populate "All" body
     todos.forEach(function (todo) {
       
       //to do description
@@ -17,10 +17,10 @@ var main = function () {
     });
   });
   
-  //when a tab is click...
+  //when a tab is clicked...
   $("#tabs > a").click(function() {
     
-    //remove active classf from all bodies
+    //remove active class from all bodies
     $(".body").removeClass("active");
     
     //get class name
