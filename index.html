@@ -1,13 +1,23 @@
 <!doctype html>
 <html>
 <head>
+  <link rel="stylesheet" type ="text/css" href="stylesheets/style.css">
   <title>To Do App</title>
 </head>
 
 <body>
-  <div id="todos">    
-  </div>
-  
+  <div id="todos"> 
+    <div id="tabs">
+      <a href="all-body" id="all-tab">All</a>
+      <a href="categorized-body" id="categorized-tab">Categorized</a>
+      <a href="add-body" id="add-tab">Add</a>
+    </div>
+    <div id="bodies">
+      <div id="all-body" class="body active"></div>
+      <div id="categorized-body" class="body"></div>
+      <div id="add-body" class="body"></div>
+    </div>       
+  </div> 
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="javascripts/app/app.js"></script>
 </body>
