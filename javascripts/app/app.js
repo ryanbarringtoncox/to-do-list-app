@@ -35,9 +35,12 @@ var main = function () {
       
     });
     
-    //populate "Categorized" body
+    //populate "Categorized" body    
+    console.log(categorizedArray);  
     
-    console.log(categorizedArray);    
+    for (var key in categorizedArray) {
+      $("#categorized-body").append("<div class='to-do'>"+key+"</div>");
+    }
     
   });
   
