@@ -19,12 +19,12 @@ var main = function () {
  
     //populate categorizedArray
     todos.forEach(function (todo) {
-      
+
       todo.categories.forEach(function(cat) {
 
         if (cat in categorizedArray) {
-          var tempArray = categorizedArray[cat];
-          tempArray.push(cat);
+          //var tempArray = categorizedArray[cat];
+          categorizedArray[cat].push(todo.description);
         }
         else {
           var tempArray = new Array;
@@ -39,7 +39,18 @@ var main = function () {
     console.log(categorizedArray);  
     
     for (var key in categorizedArray) {
+      
+      //get the key aka category
       $("#categorized-body").append("<div class='to-do'>"+key+"</div>");
+      console.log(key);
+      
+      //append descriptions
+      var descriptions = categorizedArray[key];
+      descriptions.forEach(function (descrip) {
+        
+        console.log(" "+descrip);
+        $("#categorized-body").append("<div class=''>"+descrip+"</div>");
+      })
     }
     
   });
