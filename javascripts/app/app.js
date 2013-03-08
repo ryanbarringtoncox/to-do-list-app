@@ -56,16 +56,18 @@ var main = function () {
   });
   
   //when a tab is clicked...
-  $("#tabs > a").click(function() {
+  $(".tab-wrapper > a").click(function() {
     
-    //remove active class from all bodies
+    //remove active class from all bodies and tabs
     $(".body").removeClass("active");
+    $(".tab-wrapper").removeClass("active");
     
     //get class name
     var this_class = $(this).attr("class");
     
-    //make corresponding body div active
+    //make corresponding tabs and body active
     $("#"+this_class+"-body").addClass("active");
+    $(this).parent().addClass("active");
   });
 }
 

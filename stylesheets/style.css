@@ -48,20 +48,47 @@ table {
 }
 
 /*My css*/
+body {
+  background: #000;
+}
+#todos {
+  width: 600px;
+  max-width: 100%;
+  margin: 20px auto;
+}
+#bodies {
+  margin-top: 6px;
+  border: 1px solid #000;
+  min-height: 400px;
+  padding: 10px 20px;
+  background-color: #fff;
+}
+#tabs {
+  background-color: transparent;
+}
 #tabs a {
-  border: 1px solid;
-  margin-right: 5px;
-  padding: 5px;
   text-decoration: none;
 }
 #tabs a:hover {
+  
+}
+.tab-wrapper {
+  display: inline;
+  border: 1px solid #000;
+  padding: 5px; 
+  background-color: #fff;
+}
+.tab-wrapper:hover {
   background-color: #efefef;
+}
+#tabs > .active {
+  border-bottom: 1px solid #fff;
 }
 .body {
   display: none;
   padding-top: 15px;
 }
-.active {
+#bodies > .active {
   display: block !important;
 }
 .to-do {
