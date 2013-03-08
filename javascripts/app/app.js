@@ -9,11 +9,11 @@ var main = function () {
     todos.forEach(function (todo) {
       
       //to do description
-      $("#all-body").append("<div class='to-do'>"+todo.description+"</div>");
+      $("#all-body").append("<div class='to-do'><img src='images/remove.png' alt=''remove-icon'/>"+todo.description+"</div>");
       
       //to do categories
       todo.categories.forEach(function (category) {
-        $("#all-body").append("<div class='category'>"+category+"</div>");
+        $("#all-body").append("<span class='category'>"+category+" </span>");
       });
     });
  
