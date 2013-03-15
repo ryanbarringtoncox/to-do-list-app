@@ -91,8 +91,13 @@ var main = function () {
   //when "add" is clicked
   $("button").click(function() {
     
+    //snatch input
     var description = $(".description-input").val();   
     var categories = $(".categories-input").val().split(",");
+    
+    //clear form
+    $(".description-input").val("");
+    $(".categories-input").val("");
     
     //append to DOM
     appendToDOM(description, categories);
