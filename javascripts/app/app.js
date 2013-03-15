@@ -9,7 +9,7 @@ var main = function () {
     todos.forEach(function (todo) {
       
       //to do description
-      $("#all-body").append("<div class='to-do'><img src='images/remove.png' alt=''remove-icon'/>"+todo.description+"</div>");
+      $("#all-body").append("<div class='to-do'><img src='images/remove.svg' alt=''remove-icon'/>"+todo.description+"</div>");
       
       //to do categories
       todo.categories.forEach(function (category) {
@@ -49,7 +49,7 @@ var main = function () {
       descriptions.forEach(function (descrip) {
         
         console.log(" "+descrip);
-        $("#categorized-body").append("<div class=''>"+descrip+"</div>");
+        $("#categorized-body").append("<div class=''><img src='images/remove.svg' alt=''remove-icon'/>"+descrip+"</div>");
       })
     }
     
