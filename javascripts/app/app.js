@@ -8,6 +8,21 @@ var main = function () {
       });
     });    
   }
+  
+  function appendToDOM(description, categories) {
+    console.log(description);
+    console.log(categories);
+    
+    //to do description
+    $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+"</div>");
+    
+    //to do categories
+    categories.forEach(function (category) {
+      $("#all-body").append("<span class='category'>"+category+" </span>");
+    });
+    
+    assignRemoveClick();
+  }
 
   //get json file and populate DOM...
   $.getJSON("all.json", function (todos) {
@@ -17,15 +32,8 @@ var main = function () {
     //populate "All" body
     todos.forEach(function (todo) {
       
-      //to do description
-      $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+todo.description+"</div>", function() {
-        
-      });
-      
-      //to do categories
-      todo.categories.forEach(function (category) {
-        $("#all-body").append("<span class='category'>"+category+" </span>");
-      });
+      appendToDOM(todo.description, todo.categories);
+
     });
  
     //populate categorizedArray
@@ -86,8 +94,8 @@ var main = function () {
     var description = $(".description-input").val();   
     var categories = $(".categories-input").val().split(",");
     
-    console.log(description);
-    console.log(categories);
+    //append to DOM
+    appendToDOM(description, categories);
   })
   
 }
