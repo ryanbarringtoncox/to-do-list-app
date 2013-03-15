@@ -46,26 +46,22 @@ var main = function () {
       
     });
     
-    //populate "Categorized" body    
-    console.log(categorizedArray);  
-    
+    //populate "Categorized" body        
     for (var key in categorizedArray) {
       
       //get the key aka category
       $("#categorized-body").append("<div class='to-do'>"+key+"</div>");
-      console.log(key);
       
       //append descriptions
       var descriptions = categorizedArray[key];
-      descriptions.forEach(function (descrip) {
-        
-        console.log(" "+descrip);
+      descriptions.forEach(function (descrip) {       
+
         $("#categorized-body").append("<div class=''><img src='images/remove.png' class='remove' alt='remove-icon'/>"+descrip+"</div>");
       })
     }
     
       //assign click handlers after images are placed in DOM
-      assignRemoveClick()
+      assignRemoveClick();
     
   });
   
@@ -83,6 +79,16 @@ var main = function () {
     $("#"+this_class+"-body").addClass("active");
     $(this).parent().addClass("active");
   });
+  
+  //when "add" is clicked
+  $("button").click(function() {
+    
+    var description = $(".description-input").val();   
+    var categories = $(".categories-input").val().split(",");
+    
+    console.log(description);
+    console.log(categories);
+  })
   
 }
 
