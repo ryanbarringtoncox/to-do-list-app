@@ -1,6 +1,13 @@
 var main = function () {
+  
+  //when remove icon is clicked...
+  function assignRemoveClick() {
+    $("img").click(function() {
+      alert("boo");
+    });    
+  }
 
-  //get json file of to-dos
+  //get json file and populate DOM...
   $.getJSON("all.json", function (todos) {
     var i;
     var categorizedArray = new Array();
@@ -9,7 +16,7 @@ var main = function () {
     todos.forEach(function (todo) {
       
       //to do description
-      $("#all-body").append("<div class='to-do'><img src='images/remove.svg' alt=''remove-icon'/>"+todo.description+"</div>");
+      $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+todo.description+"</div>");
       
       //to do categories
       todo.categories.forEach(function (category) {
@@ -49,9 +56,12 @@ var main = function () {
       descriptions.forEach(function (descrip) {
         
         console.log(" "+descrip);
-        $("#categorized-body").append("<div class=''><img src='images/remove.svg' alt=''remove-icon'/>"+descrip+"</div>");
+        $("#categorized-body").append("<div class=''><img src='images/remove.png' class='remove' alt='remove-icon'/>"+descrip+"</div>");
       })
     }
+    
+      //assign click handlers after images are placed in DOM
+      assignRemoveClick()
     
   });
   
@@ -69,6 +79,7 @@ var main = function () {
     $("#"+this_class+"-body").addClass("active");
     $(this).parent().addClass("active");
   });
+  
 }
 
 $(document).ready(main);

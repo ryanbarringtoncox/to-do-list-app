@@ -91,9 +91,8 @@ body {
 #bodies > .active {
   display: block !important;
 }
-#bodies img {
-  display: inline;
-  width: 15px;
+.remove {
+
 }
 .to-do {
   font-size: 22px;
