@@ -1,8 +1,8 @@
 function appendToDOM(description, categories) {
   
+  //make category string
   var categoryString = "<span class='category'>( ";
   
-  //to do categories
   categories.forEach(function (category) {
     categoryString = categoryString.concat(category + " ")
     //$("#all-body").append("<span class='category'>"+category+" </span>");
@@ -10,7 +10,7 @@ function appendToDOM(description, categories) {
   
   categoryString = categoryString.concat(")</span>");
   
-  //to do description
+  //append to all body
   $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
   
   assignRemoveClick();
