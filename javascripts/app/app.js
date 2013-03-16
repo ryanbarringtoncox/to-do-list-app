@@ -1,30 +1,36 @@
-var main = function () {
+function appendToDOM(description, categories) {
   
-  //when remove icon is clicked...
-  function assignRemoveClick() {
-    $("img").click(function() {
-      $(this).parent().fadeOut("slow", function() {
-        $(this).remove();
-      });
-    });    
-  }
+  var categoryString = "<span class='category'>( ";
   
-  function appendToDOM(description, categories) {
-    console.log(description);
-    console.log(categories);
-    
-    //to do description
-    $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+"</div>");
-    
-    //to do categories
-    categories.forEach(function (category) {
-      $("#all-body").append("<span class='category'>"+category+" </span>");
-    });
-    
-    assignRemoveClick();
-  }
+  //to do categories
+  categories.forEach(function (category) {
+    categoryString = categoryString.concat(category + " ")
+    //$("#all-body").append("<span class='category'>"+category+" </span>");
+  });  
+  
+  categoryString = categoryString.concat(")</span>");
+  
+  //to do description
+  $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
+  
+  assignRemoveClick();
+}
 
-  //get json file and populate DOM...
+//when remove icon is clicked...
+function assignRemoveClick() {
+  
+  $("img").click(function() {
+    $(this).parent().fadeOut("slow", function() {
+      //remove clicked to-do
+      $(this).remove();
+      //remove all divs with description text
+      
+    });
+  });    
+}
+
+//get json file and populate DOM...
+function getJSON() {
   $.getJSON("all.json", function (todos) {
     var i;
     var categorizedArray = new Array();
@@ -58,20 +64,25 @@ var main = function () {
     for (var key in categorizedArray) {
       
       //get the key aka category
-      $("#categorized-body").append("<div class='to-do'>"+key+"</div>");
+      $("#categorized-body").append("<div class='category-header'>"+key+"</div>");
       
       //append descriptions
       var descriptions = categorizedArray[key];
       descriptions.forEach(function (descrip) {       
 
-        $("#categorized-body").append("<div class=''><img src='images/remove.png' class='remove' alt='remove-icon'/>"+descrip+"</div>");
+        $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
       })
     }
     
       //assign click handlers after images are placed in DOM
       assignRemoveClick();
     
-  });
+  });  
+}
+
+var main = function () {
+
+  getJSON();
   
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
