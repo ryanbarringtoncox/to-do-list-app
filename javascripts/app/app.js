@@ -38,7 +38,7 @@ function assignRemoveClickEvents() {
         "description": description,
         "categories": categoriesArray
     });
-    //console.log(toDoArray);
+    //console.log(toDoArray[0]);
     
     //clear form
     $(".description-input").val("");
@@ -83,11 +83,20 @@ function assignTabClickEvents() {
 function assignRemoveClick() {
   
   $("img").click(function() {
-    console.log("img click function call");
+    
     $(this).parent().fadeOut("slow", function() {
       
       //remove from global array
-      console.log($(this));
+      var descrip = $(this)[0].innerText.split("(");
+      descrip = descrip[0];
+      
+      //get index of this description in global array
+      var index = getIndex(descrip);
+      console.log(index);
+      
+      //remove the global array index that matches descrip
+      toDoArray.splice(index,1);
+      console.log(toDoArray);
       
       //remove clicked to-do
       $(this).remove();
@@ -142,6 +151,23 @@ function fillTheDOM(todos) {
       $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
     })
   }
+}
+
+function getIndex(descrip) {
+  
+  var index = -1 //not found
+  var arr = new Array();
+  var counter = 0;
+  
+  toDoArray.forEach(function (todo) {
+    console.log("descrip is "+descrip);
+    console.log("todo.description is "+todo.description);
+    //arr[counter] = todo.description;
+    if (descrip === todo.description) {index = counter;}
+    counter++;
+  })
+  
+  return index;
 }
 
 //get json file and populate DOM...
