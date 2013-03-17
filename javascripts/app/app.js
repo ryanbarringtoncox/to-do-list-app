@@ -1,7 +1,8 @@
 //global JSON array for to-dos
 var toDoArray;
 
-function appendToDOM(description, categories) {
+//appends to "All" body
+function appendAllDiv(description, categories) {
   
   //make category string
   var categoryString = "<span class='category'>( ";
@@ -16,7 +17,6 @@ function appendToDOM(description, categories) {
   //append to all body
   $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
   
-  //assignRemoveClick();
 }
 
 function assignRemoveClickEvents() {
@@ -44,7 +44,7 @@ function assignRemoveClickEvents() {
     $(".categories-input").val("");
     
     //append to DOM
-    appendToDOM(description, categories);
+    appendAllDiv(description, categories);
   })  ;
 }
 
@@ -98,6 +98,11 @@ function assignRemoveClick() {
       //remove clicked to-do
       $(this).remove();
       
+      //if it's category tab, remove other occurrences of to-do
+      $(".lil-to-do:contains("+descrip+")").fadeOut("slow", function() {
+        $(this).remove();
+      });
+      
     });
   });    
 }
@@ -110,7 +115,7 @@ function fillTheDOM(todos) {
   //populate "All" body
   todos.forEach(function (todo) {
     
-    appendToDOM(todo.description, todo.categories);
+    appendAllDiv(todo.description, todo.categories);
 
   });
 
@@ -129,9 +134,6 @@ function fillTheDOM(todos) {
         categorizedArray[cat] = tempArray; 
       }
     });
-    
-    //assign click handlers after images are placed in DOM
-    //assignRemoveClick();
     
   });
   
