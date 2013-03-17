@@ -38,7 +38,6 @@ function assignRemoveClickEvents() {
         "description": description,
         "categories": categoriesArray
     });
-    //console.log(toDoArray[0]);
     
     //clear form
     $(".description-input").val("");
@@ -92,11 +91,9 @@ function assignRemoveClick() {
       
       //get index of this description in global array
       var index = getIndex(descrip);
-      console.log(index);
       
       //remove the global array index that matches descrip
       toDoArray.splice(index,1);
-      console.log(toDoArray);
       
       //remove clicked to-do
       $(this).remove();
@@ -160,9 +157,6 @@ function getIndex(descrip) {
   var counter = 0;
   
   toDoArray.forEach(function (todo) {
-    console.log("descrip is "+descrip);
-    console.log("todo.description is "+todo.description);
-    //arr[counter] = todo.description;
     if (descrip === todo.description) {index = counter;}
     counter++;
   })
@@ -172,7 +166,6 @@ function getIndex(descrip) {
 
 //get json file and populate DOM...
 function getJSON() {
-  //console.log("getJSON() called")
   $.getJSON("all.json", function (todos) {
     
     toDoArray = todos;
@@ -184,6 +177,7 @@ function getJSON() {
   });  
 }
 
+//main flow of control
 var main = function () {
 
   getJSON();
