@@ -19,6 +19,36 @@ function appendToDOM(description, categories) {
   assignRemoveClick();
 }
 
+function assignRemoveClickEvents() {
+  //when "add" is clicked
+  $("button").click(function() {
+    
+    //snatch input
+    var description = $(".description-input").val();
+    var categories = $(".categories-input").val().split(",");
+    var categoriesArray = new Array()
+    
+    categories.forEach(function (cat) {
+      cat = cat.replace(/\s+/g, '');
+      categoriesArray.push(cat);
+    });
+    
+    //append to global array
+    toDoArray.push({
+        "description": description,
+        "categories": categoriesArray
+    });
+    //console.log(toDoArray);
+    
+    //clear form
+    $(".description-input").val("");
+    $(".categories-input").val("");
+    
+    //append to DOM
+    appendToDOM(description, categories);
+  })  ;
+}
+
 function assignTabClickEvents() {
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
@@ -112,6 +142,7 @@ function fillTheDOM(todos) {
 
 //get json file and populate DOM...
 function getJSON() {
+  //console.log("getJSON() called")
   $.getJSON("all.json", function (todos) {
     
     toDoArray = todos;
@@ -127,32 +158,7 @@ var main = function () {
   
   assignTabClickEvents();
   
-  //when "add" is clicked
-  $("button").click(function() {
-    
-    //snatch input
-    var description = $(".description-input").val();
-    var categories = $(".categories-input").val().split(",");
-    var categoriesArray = new Array()
-    
-    categories.forEach(function (cat) {
-      categoriesArray.push(cat);
-    });
-    
-    //append to global array
-    toDoArray.push({
-        "description": description,
-        "categories": categoriesArray
-    });
-    //console.log(toDoArray);
-    
-    //clear form
-    $(".description-input").val("");
-    $(".categories-input").val("");
-    
-    //append to DOM
-    appendToDOM(description, categories);
-  })
+  assignRemoveClickEvents();
   
 }
 
