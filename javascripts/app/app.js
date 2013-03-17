@@ -19,79 +19,7 @@ function appendToDOM(description, categories) {
   assignRemoveClick();
 }
 
-//when remove icon is clicked...
-function assignRemoveClick() {
-  
-  $("img").click(function() {
-    $(this).parent().fadeOut("slow", function() {
-      //remove clicked to-do
-      $(this).remove();
-      //remove all divs with description text
-      
-    });
-  });    
-}
-
-//get json file and populate DOM...
-function getJSON() {
-  $.getJSON("all.json", function (todos) {
-    
-    toDoArray = todos;
-    
-    //console.log(toDoArray);
-    
-    var i;
-    var categorizedArray = new Array();
-    
-    //populate "All" body
-    todos.forEach(function (todo) {
-      
-      appendToDOM(todo.description, todo.categories);
-
-    });
- 
-    //populate categorizedArray
-    todos.forEach(function (todo) {
-
-      todo.categories.forEach(function(cat) {
-
-        if (cat in categorizedArray) {
-          //var tempArray = categorizedArray[cat];
-          categorizedArray[cat].push(todo.description);
-        }
-        else {
-          var tempArray = new Array;
-          tempArray[0] = todo.description;
-          categorizedArray[cat] = tempArray; 
-        }
-      });
-      
-    });
-    
-    //populate "Categorized" body        
-    for (var key in categorizedArray) {
-      
-      //get the key aka category
-      $("#categorized-body").append("<div class='category-header'>"+key+"</div>");
-      
-      //append descriptions
-      var descriptions = categorizedArray[key];
-      descriptions.forEach(function (descrip) {       
-
-        $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
-      })
-    }
-    
-      //assign click handlers after images are placed in DOM
-      assignRemoveClick();
-    
-  });  
-}
-
-var main = function () {
-
-  getJSON();
-  
+function assignTabClickEvents() {
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
     
@@ -105,7 +33,99 @@ var main = function () {
     //make corresponding tabs and body active
     $("#"+this_class+"-body").addClass("active");
     $(this).parent().addClass("active");
+    
+    //no need to re-calculate DOM for 'add' body
+    if (this_class === "add") {return};
+    
+    //clear the body
+    $("#"+this_class+"-body").html("");
+    
+    //append latest JSON
+    fillTheDOM(toDoArray);
+    
+    //assign click handlers after images are placed in DOM
+    assignRemoveClick();
+    
+  });  
+}
+
+//when remove icon is clicked...
+function assignRemoveClick() {
+  
+  $("img").click(function() {
+    $(this).parent().fadeOut("slow", function() {
+      //remove clicked to-do
+      $(this).remove();
+      //remove all divs with description text
+      
+    });
+  });    
+}
+
+function fillTheDOM(todos) {
+  
+  var i;
+  var categorizedArray = new Array();
+  
+  //populate "All" body
+  todos.forEach(function (todo) {
+    
+    appendToDOM(todo.description, todo.categories);
+
   });
+
+  //populate categorizedArray
+  todos.forEach(function (todo) {
+
+    todo.categories.forEach(function(cat) {
+
+      if (cat in categorizedArray) {
+        //var tempArray = categorizedArray[cat];
+        categorizedArray[cat].push(todo.description);
+      }
+      else {
+        var tempArray = new Array;
+        tempArray[0] = todo.description;
+        categorizedArray[cat] = tempArray; 
+      }
+    });
+    
+    //assign click handlers after images are placed in DOM
+    assignRemoveClick();
+    
+  });
+  
+  //populate "Categorized" body        
+  for (var key in categorizedArray) {
+    
+    //get the key aka category
+    $("#categorized-body").append("<div class='category-header'>"+key+"</div>");
+    
+    //append descriptions
+    var descriptions = categorizedArray[key];
+    descriptions.forEach(function (descrip) {       
+
+      $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
+    })
+  }
+}
+
+//get json file and populate DOM...
+function getJSON() {
+  $.getJSON("all.json", function (todos) {
+    
+    toDoArray = todos;
+    
+    fillTheDOM(todos);
+    
+  });  
+}
+
+var main = function () {
+
+  getJSON();
+  
+  assignTabClickEvents();
   
   //when "add" is clicked
   $("button").click(function() {
