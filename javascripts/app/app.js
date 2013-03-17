@@ -19,7 +19,45 @@ function appendAllDiv(description, categories) {
   
 }
 
-function assignRemoveClickEvents() {
+function appendCategorizedDiv(todos) {
+  
+    var i;
+    var categorizedArray = new Array();  
+  
+  //populate categorizedArray
+  todos.forEach(function (todo) {
+
+    todo.categories.forEach(function(cat) {
+
+      if (cat in categorizedArray) {
+        //var tempArray = categorizedArray[cat];
+        categorizedArray[cat].push(todo.description);
+      }
+      else {
+        var tempArray = new Array;
+        tempArray[0] = todo.description;
+        categorizedArray[cat] = tempArray; 
+      }
+    });
+    
+  });
+  
+  //populate "Categorized" body        
+  for (var key in categorizedArray) {
+    
+    //get the key aka category
+    $("#categorized-body").append("<div class='category-header'>"+key+"</div>");
+    
+    //append descriptions
+    var descriptions = categorizedArray[key];
+    descriptions.forEach(function (descrip) {       
+
+      $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
+    })
+  }
+}
+
+function assignAddClickEvents() {
   //when "add" is clicked
   $("button").click(function() {
     
@@ -45,7 +83,7 @@ function assignRemoveClickEvents() {
     
     //append to DOM
     appendAllDiv(description, categories);
-  })  ;
+  });
 }
 
 function assignTabClickEvents() {
@@ -78,7 +116,6 @@ function assignTabClickEvents() {
   });  
 }
 
-//when remove icon is clicked...
 function assignRemoveClick() {
   
   $("img").click(function() {
@@ -98,7 +135,7 @@ function assignRemoveClick() {
       //remove clicked to-do
       $(this).remove();
       
-      //if it's category tab, remove other occurrences of to-do
+      //remove other occurrences of to-do.  for category body.
       $(".lil-to-do:contains("+descrip+")").fadeOut("slow", function() {
         $(this).remove();
       });
@@ -109,9 +146,6 @@ function assignRemoveClick() {
 
 function fillTheDOM(todos) {
   
-  var i;
-  var categorizedArray = new Array();
-  
   //populate "All" body
   todos.forEach(function (todo) {
     
@@ -119,37 +153,8 @@ function fillTheDOM(todos) {
 
   });
 
-  //populate categorizedArray
-  todos.forEach(function (todo) {
+  appendCategorizedDiv(todos);
 
-    todo.categories.forEach(function(cat) {
-
-      if (cat in categorizedArray) {
-        //var tempArray = categorizedArray[cat];
-        categorizedArray[cat].push(todo.description);
-      }
-      else {
-        var tempArray = new Array;
-        tempArray[0] = todo.description;
-        categorizedArray[cat] = tempArray; 
-      }
-    });
-    
-  });
-  
-  //populate "Categorized" body        
-  for (var key in categorizedArray) {
-    
-    //get the key aka category
-    $("#categorized-body").append("<div class='category-header'>"+key+"</div>");
-    
-    //append descriptions
-    var descriptions = categorizedArray[key];
-    descriptions.forEach(function (descrip) {       
-
-      $("#categorized-body").append("<div class='lil-to-do'><img src='images/remove.png' class='remove cat-remove' alt='remove-icon'/>"+descrip+"</div>");
-    })
-  }
 }
 
 function getIndex(descrip) {
@@ -186,7 +191,7 @@ var main = function () {
   
   assignTabClickEvents();
   
-  assignRemoveClickEvents();
+  assignAddClickEvents();
   
 }
 
