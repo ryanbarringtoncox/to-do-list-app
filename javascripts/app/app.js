@@ -1,3 +1,6 @@
+//global JSON array for to-dos
+var toDoArray;
+
 function appendToDOM(description, categories) {
   
   //make category string
@@ -32,6 +35,11 @@ function assignRemoveClick() {
 //get json file and populate DOM...
 function getJSON() {
   $.getJSON("all.json", function (todos) {
+    
+    toDoArray = todos;
+    
+    //console.log(toDoArray);
+    
     var i;
     var categorizedArray = new Array();
     
@@ -103,8 +111,20 @@ var main = function () {
   $("button").click(function() {
     
     //snatch input
-    var description = $(".description-input").val();   
+    var description = $(".description-input").val();
     var categories = $(".categories-input").val().split(",");
+    var categoriesArray = new Array()
+    
+    categories.forEach(function (cat) {
+      categoriesArray.push(cat);
+    });
+    
+    //append to global array
+    toDoArray.push({
+        "description": description,
+        "categories": categoriesArray
+    });
+    //console.log(toDoArray);
     
     //clear form
     $(".description-input").val("");
