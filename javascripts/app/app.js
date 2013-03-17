@@ -16,7 +16,7 @@ function appendToDOM(description, categories) {
   //append to all body
   $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
   
-  assignRemoveClick();
+  //assignRemoveClick();
 }
 
 function assignRemoveClickEvents() {
@@ -83,10 +83,14 @@ function assignTabClickEvents() {
 function assignRemoveClick() {
   
   $("img").click(function() {
+    console.log("img click function call");
     $(this).parent().fadeOut("slow", function() {
+      
+      //remove from global array
+      console.log($(this));
+      
       //remove clicked to-do
       $(this).remove();
-      //remove all divs with description text
       
     });
   });    
@@ -121,7 +125,7 @@ function fillTheDOM(todos) {
     });
     
     //assign click handlers after images are placed in DOM
-    assignRemoveClick();
+    //assignRemoveClick();
     
   });
   
@@ -148,6 +152,8 @@ function getJSON() {
     toDoArray = todos;
     
     fillTheDOM(todos);
+    
+    assignRemoveClick();
     
   });  
 }
