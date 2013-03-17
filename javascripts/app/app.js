@@ -3,27 +3,26 @@ var toDoArray;
 
 //appends to "All" body
 function appendAllDiv(description, categories) {
-  
+
   //make category string
   var categoryString = "<span class='category'>( ";
-  
+
   categories.forEach(function (category) {
-    categoryString = categoryString.concat(category + " ")
-    //$("#all-body").append("<span class='category'>"+category+" </span>");
-  });  
-  
+    categoryString = categoryString.concat(category + " ");
+  });
+
   categoryString = categoryString.concat(")</span>");
-  
+
   //append to all body
   $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
-  
+
 }
 
 function appendCategorizedDiv(todos) {
-  
+
     var i;
     var categorizedArray = new Array();  
-  
+
   //populate categorizedArray
   todos.forEach(function (todo) {
 
@@ -39,7 +38,7 @@ function appendCategorizedDiv(todos) {
         categorizedArray[cat] = tempArray; 
       }
     });
-    
+  
   });
   
   //populate "Categorized" body        
