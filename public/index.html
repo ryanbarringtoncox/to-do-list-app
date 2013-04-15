@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type ="text/css" href="stylesheets/style.css">
+  <title>To Do App</title>
+</head>
+
+<body>
+  <div id="todos"> 
+    <div id="tabs">
+      <div class="tab-wrapper active"><a href="#" class="all">All</a></div>
+      <div class="tab-wrapper"><a href="#" class="categorized">Categorized</a></div>
+      <div class="tab-wrapper"><a href="#" class="add">Add</a></div>
+    </div>
+    <div id="bodies">
+      <div id="all-body" class="all body active"></div>
+      <div id="categorized-body" class="categorized body"></div>
+      <div id="add-body" class="add body">
+        <h2>Description</h2><input type="text" name="description" class="description-input"><br>
+        <h2>Categories (separate with comma)</h2><input type="text" name="categories" class="categories-input"><br>
+        <button class="add-button">Add!</button>        
+      </div>
+   </div>       
+  </div> 
+  <script src="javascripts/lib/jquery.js"></script>
+  <script src="javascripts/app/app.js"></script>
+</body>
+</html>

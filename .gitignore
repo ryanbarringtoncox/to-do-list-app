@@ -1,3 +1,4 @@
 ._redcar*
 .redcar*
 *.bak
+node_modules
