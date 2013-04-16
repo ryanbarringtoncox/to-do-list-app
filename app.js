@@ -31,7 +31,8 @@ Todo.findOne({}, function (err, result) {
 });
   
 app.configure(function() {
-   app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.bodyParser());
 });
 
 app.get("/todos.json", function(req, res) {
@@ -47,6 +48,22 @@ app.get("/todos.json", function(req, res) {
       console.log(todos);
     }
   })
+});
+
+app.post("/todo/new", function(req, res) {
+  //console.log("post called");
+  var t = new Todo({
+    "description": req.body.description,
+    "categories": req.body.categories
+  });
+  
+  t.save(function(err, result) {
+    if (err!==null) {
+      console.log(err);
+    } else {
+      res.json(result);
+    }
+  });
 });
 
 http.createServer(app).listen(3000, function() {

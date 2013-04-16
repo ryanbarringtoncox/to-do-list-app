@@ -70,12 +70,18 @@ function assignAddClickEvents() {
       categoriesArray.push(cat);
     });
     
-    //append to global array
-    toDoArray.push({
+    //create the post object
+    var todoPostObject = {
         "description": description,
-        "categories": categoriesArray
-    });
+        "categories": categoriesArray     
+    };
     
+    console.log(todoPostObject);
+    
+    $.post("/todo/new", todoPostObject, function(res) {
+      console.log(res);
+    });
+        
     //clear form
     $(".description-input").val("");
     $(".categories-input").val("");
@@ -172,7 +178,7 @@ function getIndex(descrip) {
 
 //get json file and populate DOM...
 function getJSON() {
-  $.getJSON("all.json", function (todos) {
+  $.getJSON("/todos.json", function (todos) {
     
     toDoArray = todos;
     
