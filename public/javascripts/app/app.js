@@ -63,37 +63,46 @@ function assignAddClickEvents() {
     //snatch input
     var description = $(".description-input").val();
     var categories = $(".categories-input").val().split(",");
-    var categoriesArray = new Array()
+    var categoriesArray = new Array();
     
-    categories.forEach(function (cat) {
-      cat = cat.replace(/\s+/g, '');
-      categoriesArray.push(cat);
-    });
-    
-    //create the post object
-    var todoPostObject = {
-        "description": description,
-        "categories": categoriesArray     
-    };
-    
-    console.log(todoPostObject);
-    
-    $.post("/todo/new", todoPostObject, function(res) {
-      console.log(res);
-    });
+    //simple validation
+    if (description === "") {
+      alert("You must add a description!");
+    } else {
+        categories.forEach(function (cat) {
+          cat = cat.replace(/\s+/g, '');
+          categoriesArray.push(cat);
+        });
         
-    //clear form
-    $(".description-input").val("");
-    $(".categories-input").val("");
-    
-    //append to DOM
-    appendAllDiv(description, categories);
-  });
+        //create the post object
+        var todoPostObject = {
+            "description": description,
+            "categories": categoriesArray     
+        };
+        
+        console.log(todoPostObject);
+        
+        $.post("/todo/new", todoPostObject, function(res) {
+          //console.log(res);
+          
+          //clear form
+          $(".description-input").val("");
+          $(".categories-input").val("");
+          
+          //append to DOM
+          appendAllDiv(description, categories);
+        });
+      }
+    });
 }
 
 function assignTabClickEvents() {
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
+    console.log("tab clicked!");
+    
+    //get latest JSON
+    getJSON();
     
     //remove active class from all bodies and tabs
     $(".body").removeClass("active");
