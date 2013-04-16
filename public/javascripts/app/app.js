@@ -154,6 +154,9 @@ function assignRemoveClick() {
         $(this).remove();
       });
       
+      //remove from mongoDB
+      //console.log(descrip);
+      
     });
   });    
 }
