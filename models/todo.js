@@ -9,14 +9,14 @@ var TodoSchema = {
 
 var Todo = mongoose.model("Todo", TodoSchema);
 
-//saves initial todo in database
+//if db is empty, save an initial todo to database
 Todo.findOne({}, function (err, result) {
-    if (err !== null) {
+  if (err !== null) {
 	console.log(err);
     } else if (result === null) {
 	var p = new Todo({
 	    "description": "Have fun",
-	    "categories": ["work", "personal"]
+	    "categories": ["health", "personal"]
 	});
 
 	p.save(function (err) {

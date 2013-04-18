@@ -36,10 +36,8 @@ TodoController.remove = function(req, res) {
   Todo.find({"description":description}, function(err, results) {
     if(err) {
       console.log(err);
-    } else {
-      console.log("mongo query result is "+ results);
-      
-      results.forEach(function(result) {
+    } else {      
+        results.forEach(function(result) {
         result.remove();
       });      
     }

@@ -17,8 +17,8 @@ function appendAllDiv(description, categories) {
 
 function appendCategorizedDiv(todos) {
 
-  var i;
-  var categorizedArray = new Array();  
+  var i
+  ,categorizedArray = new Array();  
 
   //populate categorizedArray
   todos.forEach(function (todo) {
@@ -54,6 +54,7 @@ function appendCategorizedDiv(todos) {
 }
 
 function assignAddClickEvents() {
+  
   //when "add" is clicked
   $("button").click(function() {
     
@@ -129,7 +130,6 @@ function assignRemoveClick() {
       descrip = descrip[0];
       
       //remove from mongoDB
-      console.log("posting " + descrip);
       $.post("/todos/remove", {"description" : descrip}, function(res) {
         //console.log("res is " + res);
       });
