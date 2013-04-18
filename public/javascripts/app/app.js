@@ -1,6 +1,3 @@
-//global JSON array for to-dos
-var toDoArray;
-
 //appends to "All" body
 function appendAllDiv(description, categories) {
 
@@ -20,8 +17,8 @@ function appendAllDiv(description, categories) {
 
 function appendCategorizedDiv(todos) {
 
-    var i;
-    var categorizedArray = new Array();  
+  var i;
+  var categorizedArray = new Array();  
 
   //populate categorizedArray
   todos.forEach(function (todo) {
@@ -79,11 +76,8 @@ function assignAddClickEvents() {
             "description": description,
             "categories": categoriesArray     
         };
-        
-        //console.log(todoPostObject);
-        
+                
         $.post("/todo/new", todoPostObject, function(res) {
-          //console.log(res);
           
           //clear form
           $(".description-input").val("");
@@ -97,12 +91,9 @@ function assignAddClickEvents() {
 }
 
 function assignTabClickEvents() {
+
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
-    //console.log("tab clicked!");
-    
-    //get latest JSON
-    getJSON();
     
     //remove active class from all bodies and tabs
     $(".body").removeClass("active");
@@ -122,10 +113,7 @@ function assignTabClickEvents() {
     $("#"+this_class+"-body").html("");
     
     //append latest JSON
-    fillTheDOM(toDoArray);
-    
-    //assign click handlers after images are placed in DOM
-    assignRemoveClick();
+    getTodos();
     
   });  
 }
@@ -140,25 +128,14 @@ function assignRemoveClick() {
       var descrip = $(this)[0].innerText.split("(");
       descrip = descrip[0];
       
-      //get index of this description in global array
-      var index = getIndex(descrip);
-      
-      //remove the global array index that matches descrip
-      toDoArray.splice(index,1);
-      
-      //remove clicked to-do
-      $(this).remove();
-      
-      //remove other occurrences of to-do.  for category body.
-      $(".lil-to-do:contains("+descrip+")").fadeOut("slow", function() {
-        $(this).remove();
-      });
-      
       //remove from mongoDB
       console.log("posting " + descrip);
-      $.post("/todos/remove", descrip, function(res) {
-        console.log("res is " + res);
+      $.post("/todos/remove", {"description" : descrip}, function(res) {
+        //console.log("res is " + res);
       });
+      
+      //clear todo from DOM
+
       
     });
   });    
@@ -177,26 +154,12 @@ function fillTheDOM(todos) {
 
 }
 
-function getIndex(descrip) {
-  
-  var index = -1 //not found
-  var arr = new Array();
-  var counter = 0;
-  
-  toDoArray.forEach(function (todo) {
-    if (descrip === todo.description) {index = counter;}
-    counter++;
-  })
-  
-  return index;
-}
-
 //get json file and populate DOM...
-function getJSON() {
+function getTodos() {
+  
+  //get todos in json
   $.getJSON("/todos.json", function (todos) {
-    
-    toDoArray = todos;
-    
+        
     fillTheDOM(todos);
     
     assignRemoveClick();
@@ -206,8 +169,8 @@ function getJSON() {
 
 //main flow of control
 var main = function () {
-
-  getJSON();
+  
+  getTodos();
   
   assignTabClickEvents();
   

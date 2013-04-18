@@ -9,6 +9,7 @@ var TodoSchema = {
 
 var Todo = mongoose.model("Todo", TodoSchema);
 
+//saves initial todo in database
 Todo.findOne({}, function (err, result) {
     if (err !== null) {
 	console.log(err);
@@ -19,7 +20,7 @@ Todo.findOne({}, function (err, result) {
 	});
 
 	p.save(function (err) {
-	    if (err !== null) {
+	  if (err !== null) {
 		console.log(err);
 	    }
 	});

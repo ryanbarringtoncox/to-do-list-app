@@ -27,8 +27,23 @@ TodoController.create = function(req, res) {
 };
 
 TodoController.remove = function(req, res) {
-  console.log("remove controller called!");
   
+  //get the description field to be remove
+  var description = req.body.description;
+  console.log(description);
+  
+  //find desscription with requst string
+  Todo.find({"description":description}, function(err, results) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("mongo query result is "+ results);
+      
+      results.forEach(function(result) {
+        result.remove();
+      });      
+    }
+  });
 }
   
 module.exports = TodoController;
