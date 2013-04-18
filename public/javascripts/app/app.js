@@ -80,7 +80,7 @@ function assignAddClickEvents() {
             "categories": categoriesArray     
         };
         
-        console.log(todoPostObject);
+        //console.log(todoPostObject);
         
         $.post("/todo/new", todoPostObject, function(res) {
           //console.log(res);
@@ -99,7 +99,7 @@ function assignAddClickEvents() {
 function assignTabClickEvents() {
   //when a tab is clicked...
   $(".tab-wrapper > a").click(function() {
-    console.log("tab clicked!");
+    //console.log("tab clicked!");
     
     //get latest JSON
     getJSON();
