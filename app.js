@@ -18,3 +18,4 @@ http.createServer(app).listen(3000, function() {
 
 app.get("/todos.json", todoController.list);
 app.post("/todo/new", todoController.create);
+app.post("/todos/remove", todoController.remove);

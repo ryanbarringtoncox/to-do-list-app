@@ -25,5 +25,10 @@ TodoController.create = function(req, res) {
     }
   }); 
 };
+
+TodoController.remove = function(req, res) {
+  console.log("remove controller called!");
+  
+}
   
 module.exports = TodoController;

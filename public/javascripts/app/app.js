@@ -155,7 +155,10 @@ function assignRemoveClick() {
       });
       
       //remove from mongoDB
-      //console.log(descrip);
+      console.log("posting " + descrip);
+      $.post("/todos/remove", descrip, function(res) {
+        console.log("res is " + res);
+      });
       
     });
   });    
