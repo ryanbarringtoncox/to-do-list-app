@@ -135,7 +135,7 @@ function assignRemoveClick() {
       });
       
       //clear todo from DOM
-
+      $(".lil-to-do:contains('"+descrip+"')").fadeOut("slow");
       
     });
   });    
