@@ -4,8 +4,6 @@ var todoArray;
 function updateTodoArray(callback) {
     $.getJSON("/todos.json", function (todos) {
       todoArray = todos;
-      console.log("todos routed from json");
-      console.log(todos);
       if (callback) {
         callback();        
       }
@@ -14,8 +12,6 @@ function updateTodoArray(callback) {
 
 //appends to "All" body
 function appendAllDiv(todos) {
-  console.log("appendAllDiv called")
-  console.log(todos);
   
     //populate "All" body
   todos.forEach(function (todo) {
@@ -97,7 +93,7 @@ function assignAddClickEvents() {
             "description": description,
             "categories": categoriesArray     
         };
-        console.log("error yet?");      
+              
         $.post("/todo/new", todoPostObject, function(res) {
           
           //clear form
@@ -128,9 +124,7 @@ function assignTabClickEvents() {
     //make corresponding tabs and body active
     $("#"+this_class+"-body").addClass("active");
     $(this).parent().addClass("active");
-    
-    console.log("this class is " + this_class);
-    
+        
     //no need to re-calculate DOM for 'add' body
     if (this_class !== "add") {
     
@@ -175,9 +169,7 @@ function assignRemoveClick() {
 
 //get json file and populate DOM...
 function updateDOM() {
-  console.log("updateDOM called");
-  console.log(todoArray)
-        
+          
   //populate all and categorized bodies
   appendAllDiv(todoArray);
   appendCategorizedDiv(todoArray);

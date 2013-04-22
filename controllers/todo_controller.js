@@ -27,7 +27,7 @@ TodoController.create = function(req, res) {
 };
 
 TodoController.remove = function(req, res) {
-  
+  console.log("remove called on server");
   //get the description field to be remove
   var description = req.body.description;
   //console.log(description);
@@ -38,8 +38,10 @@ TodoController.remove = function(req, res) {
       console.log(err);
     } else {      
         results.forEach(function(result) {
-        result.remove();
-      });      
+          result.remove();
+      });
+      //post results!
+      res.json(results);
     }
   });
 }
