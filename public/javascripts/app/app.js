@@ -1,18 +1,38 @@
+var todoArray = [];
+
+//update todoArray from db
+function updateTodoArray(callback) {
+    $.getJSON("/todos.json", function (todos) {
+      todoArray = todos;
+      console.log("todos updated");
+      console.log(todoArray);
+      if (callback) {
+        callback();        
+      }
+    });  
+}
+
 //appends to "All" body
-function appendAllDiv(description, categories) {
+function appendAllDiv(todos) {
+  console.log("appendAllDiv called")
+  console.log(todos);
+  
+    //populate "All" body
+  todos.forEach(function (todo) {
+        
+    //make category string
+    var categoryString = "<span class='category'>( ";
+  
+    todo.categories.forEach(function (category) {
+      categoryString = categoryString.concat(category + " ");
+    });
+  
+    categoryString = categoryString.concat(")</span>");
+  
+    //append to all body
+    $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+todo.description+categoryString+"</div>");
 
-  //make category string
-  var categoryString = "<span class='category'>( ";
-
-  categories.forEach(function (category) {
-    categoryString = categoryString.concat(category + " ");
   });
-
-  categoryString = categoryString.concat(")</span>");
-
-  //append to all body
-  $("#all-body").append("<div class='to-do'><img src='images/remove.png' class='remove' alt=''remove-icon'/>"+description+categoryString+"</div>");
-
 }
 
 function appendCategorizedDiv(todos) {
@@ -77,7 +97,7 @@ function assignAddClickEvents() {
             "description": description,
             "categories": categoriesArray     
         };
-                
+        console.log("error yet?");      
         $.post("/todo/new", todoPostObject, function(res) {
           
           //clear form
@@ -85,7 +105,9 @@ function assignAddClickEvents() {
           $(".categories-input").val("");
           
           //append to DOM
-          appendAllDiv(description, categories);
+          //appendAllDiv(description, categories);
+          updateTodoArray(); 
+               
         });
       }
     });
@@ -114,7 +136,7 @@ function assignTabClickEvents() {
     $("#"+this_class+"-body").html("");
     
     //append latest JSON
-    getTodos();
+    updateDOM();
     
   });  
 }
@@ -125,57 +147,52 @@ function assignRemoveClick() {
     
     $(this).parent().fadeOut("slow", function() {
       
-      //remove from global array
+      //get description string
       var descrip = $(this)[0].innerText.split("(");
       descrip = descrip[0];
       
       //remove from mongoDB
       $.post("/todos/remove", {"description" : descrip}, function(res) {
         //console.log("res is " + res);
+        
+      updateTodoArray();
+        
       });
       
-      //clear todo from DOM
-      $(".lil-to-do:contains('"+descrip+"')").fadeOut("slow");
+      //clear matching todos from DOM
+      $(".lil-to-do:contains('"+descrip+"')").fadeOut("slow", function() {
+        $(this).remove();
+      });
+       $(".to-do:contains('"+descrip+"')").fadeOut("slow", function() {
+        $(this).remove();
+      });    
       
     });
   });    
 }
 
-function fillTheDOM(todos) {
-  
-  //populate "All" body
-  todos.forEach(function (todo) {
-    
-    appendAllDiv(todo.description, todo.categories);
-
-  });
-
-  appendCategorizedDiv(todos);
-
-}
-
 //get json file and populate DOM...
-function getTodos() {
-  
-  //get todos in json
-  $.getJSON("/todos.json", function (todos) {
+function updateDOM() {
+  console.log("updateDOM called");
         
-    fillTheDOM(todos);
+  //populate all and categorized bodies
+  appendAllDiv(todoArray);
+  appendCategorizedDiv(todoArray);
+  
+  assignRemoveClick();
     
-    assignRemoveClick();
-    
-  });  
 }
 
 //main flow of control
 var main = function () {
   
-  getTodos();
-  
-  assignTabClickEvents();
-  
-  assignAddClickEvents();
-  
+  //update array
+  updateTodoArray(function() {
+    //update DOM
+    updateDOM();
+    assignTabClickEvents();
+    assignAddClickEvents();    
+  }); 
 }
 
 $(document).ready(main);
