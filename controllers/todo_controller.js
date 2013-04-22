@@ -30,7 +30,7 @@ TodoController.remove = function(req, res) {
   
   //get the description field to be remove
   var description = req.body.description;
-  console.log(description);
+  //console.log(description);
   
   //find desscription with requst string
   Todo.find({"description":description}, function(err, results) {

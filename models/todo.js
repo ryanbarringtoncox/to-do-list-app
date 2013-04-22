@@ -14,17 +14,17 @@ Todo.findOne({}, function (err, result) {
   if (err !== null) {
 	console.log(err);
     } else if (result === null) {
-	var p = new Todo({
-	    "description": "Have fun",
-	    "categories": ["health", "personal"]
-	});
-
-	p.save(function (err) {
-	  if (err !== null) {
-		console.log(err);
-	    }
-	});
-    }
+      	var p = new Todo({
+      	    "description": "Have fun",
+      	    "categories": ["health", "personal"]
+      	});
+      
+      	p.save(function (err) {
+      	  if (err !== null) {
+      		console.log(err);
+      	    }
+      	});
+      }
 });
 
 module.exports = Todo;

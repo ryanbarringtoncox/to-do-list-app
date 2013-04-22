@@ -1,11 +1,11 @@
-var todoArray = [];
+var todoArray;
 
 //update todoArray from db
 function updateTodoArray(callback) {
     $.getJSON("/todos.json", function (todos) {
       todoArray = todos;
-      console.log("todos updated");
-      console.log(todoArray);
+      console.log("todos routed from json");
+      console.log(todos);
       if (callback) {
         callback();        
       }
@@ -129,15 +129,17 @@ function assignTabClickEvents() {
     $("#"+this_class+"-body").addClass("active");
     $(this).parent().addClass("active");
     
+    console.log("this class is " + this_class);
+    
     //no need to re-calculate DOM for 'add' body
-    if (this_class === "add") {return};
+    if (this_class !== "add") {
     
-    //clear the body
-    $("#"+this_class+"-body").html("");
-    
-    //append latest JSON
-    updateDOM();
-    
+      //clear the body
+      $("#"+this_class+"-body").html("");
+      
+      //append latest JSON
+      updateDOM();
+    } else {return; }
   });  
 }
 
@@ -155,7 +157,7 @@ function assignRemoveClick() {
       $.post("/todos/remove", {"description" : descrip}, function(res) {
         //console.log("res is " + res);
         
-      updateTodoArray();
+        updateTodoArray();
         
       });
       
@@ -174,6 +176,7 @@ function assignRemoveClick() {
 //get json file and populate DOM...
 function updateDOM() {
   console.log("updateDOM called");
+  console.log(todoArray)
         
   //populate all and categorized bodies
   appendAllDiv(todoArray);
@@ -188,10 +191,12 @@ var main = function () {
   
   //update array
   updateTodoArray(function() {
+    
     //update DOM
     updateDOM();
     assignTabClickEvents();
-    assignAddClickEvents();    
+    assignAddClickEvents();
+    
   }); 
 }
 
