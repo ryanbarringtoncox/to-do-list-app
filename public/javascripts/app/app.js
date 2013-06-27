@@ -144,7 +144,7 @@ function assignRemoveClick() {
     $(this).parent().fadeOut("slow", function() {
       
       //get description string
-      var descrip = $(this)[0].innerText.split("(");
+      var descrip = $(this)[0].textContent.split("(");
       descrip = descrip[0];
       
       //remove from mongoDB
