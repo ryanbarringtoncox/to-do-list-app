@@ -1,5 +1,4 @@
 ##Run Locally
-==============
 
 To run locally, clone Semmy Purewal's excellent node-dev-bootstrap repo and build your virtual vagrant environment with node.js, mongodb, shared folder, port-forwarding, etc.
 
